@@ -170,3 +170,29 @@ $(function () {
     // 初始化加载 tooltipped.
     $('.tooltipped').tooltip();
 });
+// 轮播初始化
+function initCarousel() {
+  const images = [
+    '<%- theme.jsDelivr.url %><%- url_for("/medias/banner/0.jpg") %>',
+    '<%- theme.jsDelivr.url %><%- url_for("/medias/banner/1.jpg") %>'
+  ];
+  
+  let currentIndex = 0;
+  const $banner = $('.bg-cover');
+  
+  function switchSlide(newIndex) {
+    currentIndex = (newIndex + images.length) % images.length;
+    $banner.css('background-image', `url(${images[currentIndex]})`);
+  }
+  
+  $('.carousel-prev').click(() => switchSlide(currentIndex - 1));
+  $('.carousel-next').click(() => switchSlide(currentIndex + 1));
+  
+  // 自动播放
+  if (theme.banner.interval) {
+    setInterval(() => switchSlide(currentIndex + 1), theme.banner.interval);
+  }
+}
+
+// 初始化
+$(document).ready(initCarousel);

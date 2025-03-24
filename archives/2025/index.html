@@ -308,7 +308,15 @@
 
     <div class="bg-cover pd-header about-cover">
     <div class="container">
-    <div class="row">
+    
+  <!-- 轮播控件 -->
+<div class="carousel-controls">
+    <div class="carousel-prev"><i class="fa fa-chevron-left"></i></div>
+    <div class="carousel-next"><i class="fa fa-chevron-right"></i></div>
+  </div>
+
+
+<div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
         <div class="brand">
             <div class="title center-align">
@@ -335,13 +343,84 @@
             </div>
         </div>
     </div>
-</div>
 
+</div>
+  <style>
+   
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    .carousel-prev, .carousel-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .carousel-prev {
+      left: 20px;
+    }
+
+    .carousel-next {
+      right: 20px;
+    }
+  </style>
 
 <script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+
+
+   function initCarousel() {
+  const images = [
+    '/medias/banner/0.jpg',
+    '/medias/banner/1.jpg'
+  ];
+  
+  let currentIndex = 0;
+  const $banner = $('.bg-cover');
+  $banner.css('background-image', `url(${images[currentIndex]})`);
+
+
+  function switchSlide(newIndex) {
+    currentIndex = (newIndex + images.length) % images.length;
+    $banner.css('background-image', `url(${images[currentIndex]})`);
+  }
+  
+  $('.carousel-prev').click(() => switchSlide(currentIndex - 1));
+  $('.carousel-next').click(() => switchSlide(currentIndex + 1));
+  
+  // 自动播放
+  if (theme.banner.interval) {
+    setInterval(() => switchSlide(currentIndex + 1), theme.banner.interval);
+  }
+}
+
+// 初始化
+$(document).ready(initCarousel);
+
+
+// 在 initCarousel 中添加
+function updateIndicators(index) {
+  $('.indicator').removeClass('active')
+    .eq(index).addClass('active');
+}
+
+$('.indicator').click(function() {
+  const index = $(this).data('index');
+  switchSlide(index);
+});
 </script>
 
 

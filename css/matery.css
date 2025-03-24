@@ -33,6 +33,7 @@
     }
 }
 
+
 body {
     background-color: #eaeaea;
     margin: 0;
@@ -533,7 +534,8 @@ header .go-back i {
     position: relative;
     display: flex;
     align-items: center;
-    height: 60vh;
+    height: 100%;
+    width: 100%;
     padding: 0;
     border: 0;
     overflow: hidden;
@@ -550,10 +552,10 @@ header .go-back i {
     height: 40vh !important;
 }
 
-.bg-cover:after {
+/* .bg-cover:after {
     -webkit-animation: rainbow 60s infinite;
     animation: rainbow 60s infinite;
-}
+} */
 
 .bg-cover:before,
 .bg-cover:after {
